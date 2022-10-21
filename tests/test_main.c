@@ -159,6 +159,52 @@ void test_verify_sub_array_ko(void){
 	CU_ASSERT(verify_sub_array(grid,0) != 0);
 }
 
+void test_verify_grid(void){
+	int i,j;
+
+	int grid[LENGTH_GRID][LENGTH_GRID] = \
+		{{1, 2, 3, 4, 5, 6, 7, 8, 9}, \
+		{4, 5, 6, 7, 8, 9, 1, 2, 3}, \
+		{7, 8, 9, 1, 2, 3, 4, 5, 6}, \
+		{2, 3, 4, 5, 6, 7, 8, 9, 1}, \
+		{5, 6, 7, 8, 9, 1, 2, 3, 4}, \
+		{8, 9, 1, 2, 3, 4, 5, 6, 7}, \
+		{3, 4, 5, 6, 7, 8, 9, 1, 2}, \
+		{6, 7, 8, 9, 1, 2, 3, 4, 5}, \
+		{9, 1, 2, 3, 4, 5, 6, 7, 8}};
+
+	for (i=0;i<LENGTH_GRID;i++){
+		for (j=0;j<LENGTH_GRID;j++){
+			grid[i][j]--;
+		}
+	}
+
+	CU_ASSERT(verify_grid(grid) == 0);
+}
+
+void test_verify_grid_ko(void){
+	int i,j;
+
+	int grid[LENGTH_GRID][LENGTH_GRID] = \
+		{{2, 2, 3, 4, 5, 6, 7, 8, 9}, \
+		{4, 5, 6, 7, 8, 9, 1, 2, 3}, \
+		{7, 8, 9, 1, 2, 3, 4, 5, 6}, \
+		{2, 3, 4, 5, 6, 7, 8, 9, 1}, \
+		{5, 6, 7, 8, 9, 1, 2, 3, 4}, \
+		{8, 9, 1, 2, 3, 4, 5, 6, 7}, \
+		{3, 4, 5, 6, 7, 8, 9, 1, 2}, \
+		{6, 7, 8, 9, 1, 2, 3, 4, 5}, \
+		{9, 1, 2, 3, 4, 5, 6, 7, 8}};
+
+	for (i=0;i<LENGTH_GRID;i++){
+		for (j=0;j<LENGTH_GRID;j++){
+			grid[i][j]--;
+		}
+	}
+
+	CU_ASSERT(verify_grid(grid) != 0);
+}
+
 int init_suite(void) { return 0; }
 int clean_suite(void) { return 0; }
 
@@ -186,7 +232,9 @@ int main()
 		NULL == CU_add_test(pSuite, "test_verify_col_row_COL_ko_not_complete()", test_verify_col_row_COL_ko_not_complete ) ||
 		NULL == CU_add_test(pSuite, "test_verify_col_row_ROW_ko_not_complete()", test_verify_col_row_ROW_ko_not_complete ) ||
 		NULL == CU_add_test(pSuite, "test_verify_sub_array()", test_verify_sub_array ) ||
-		NULL == CU_add_test(pSuite, "test_verify_sub_array()", test_verify_sub_array_ko ) 
+		NULL == CU_add_test(pSuite, "test_verify_sub_array_ko()", test_verify_sub_array_ko ) ||
+		NULL == CU_add_test(pSuite, "test_verify_grid()", test_verify_grid )  ||
+		NULL == CU_add_test(pSuite, "test_verify_grid_ko()", test_verify_grid_ko )
 	)
 	{
 		CU_cleanup_registry();

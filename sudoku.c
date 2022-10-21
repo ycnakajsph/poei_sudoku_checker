@@ -54,8 +54,6 @@ int verify_col_row(int grid[LENGTH_GRID][LENGTH_GRID], int index, int col_row){
 	return verify_all_found(found);
 }
 
-
-
 int verify_sub_array(int grid[LENGTH_GRID][LENGTH_GRID],int index){
 
 	int i;
@@ -75,3 +73,24 @@ int verify_sub_array(int grid[LENGTH_GRID][LENGTH_GRID],int index){
 	return verify_all_found(found);
 }
 
+int verify_grid(int grid[LENGTH_GRID][LENGTH_GRID]){
+	int i;
+
+	for (i=0;i<LENGTH_GRID;i++){
+
+		if( verify_sub_array(grid,i) != 0 ){
+			printf("sub array %d is wrong\n",i);
+			return -1;
+		}
+		if( verify_col_row(grid,i,COL) != 0){
+			printf("col %d is wrong\n",i);
+			return -1;
+		}
+		if( verify_col_row(grid,i,ROW) != 0){
+			printf("row %d is wrong\n",i);
+			return -1;
+		}
+	}
+
+	return 0;
+}
