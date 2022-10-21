@@ -4,6 +4,7 @@
 #include <sys/stat.h>
 
 #include <CUnit/CUnit.h>
+#include <CUnit/Basic.h>
 
 #include "../sudoku.h"
 
