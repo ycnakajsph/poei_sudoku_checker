@@ -138,6 +138,27 @@ void test_verify_sub_array(void){
 	CU_ASSERT(verify_sub_array(grid,8) == 0);
 }
 
+void test_verify_sub_array_ko(void){
+
+	int grid[LENGTH_GRID][LENGTH_GRID];
+	int i,j,prev_val;
+
+	for (i=0;i<LENGTH_GRID;i++){
+		set_minus_one(grid[i],LENGTH_GRID);
+	}
+
+	prev_val=0;
+	for(i=0;i<3;i++){
+		for(j=0;j<3;j++){
+			grid[i][j] = prev_val++;
+		}
+	}
+
+	grid[0][0] = 7;
+
+	CU_ASSERT(verify_sub_array(grid,0) != 0);
+}
+
 int init_suite(void) { return 0; }
 int clean_suite(void) { return 0; }
 
@@ -164,7 +185,8 @@ int main()
 		NULL == CU_add_test(pSuite, "test_verify_col_row_ROW_ko()", test_verify_col_row_ROW_ko ) ||
 		NULL == CU_add_test(pSuite, "test_verify_col_row_COL_ko_not_complete()", test_verify_col_row_COL_ko_not_complete ) ||
 		NULL == CU_add_test(pSuite, "test_verify_col_row_ROW_ko_not_complete()", test_verify_col_row_ROW_ko_not_complete ) ||
-		NULL == CU_add_test(pSuite, "test_verify_sub_array()", test_verify_sub_array ) 
+		NULL == CU_add_test(pSuite, "test_verify_sub_array()", test_verify_sub_array ) ||
+		NULL == CU_add_test(pSuite, "test_verify_sub_array()", test_verify_sub_array_ko ) 
 	)
 	{
 		CU_cleanup_registry();
