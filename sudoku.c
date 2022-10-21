@@ -19,10 +19,28 @@ void set_minus_one(int tab[], int sizetab){
 	}
 }
 
+void init_found_zero(int found[LENGTH_GRID]){
+	int i;
+	for (i=0;i<LENGTH_GRID;i++){
+		found[i] = 0;
+	}
+}
+
+int verify_all_found(int found[LENGTH_GRID]){
+	int i;
+	for (i=0;i<LENGTH_GRID;i++){
+		if (found[i] != FOUND){
+			return -1;
+		}
+	}
+	return 0;
+}
+
 int verify_col_row(int grid[LENGTH_GRID][LENGTH_GRID], int index, int col_row){
 	int i;
 	int found[LENGTH_GRID];
-	set_minus_one(found,LENGTH_GRID);
+
+	init_found_zero(found);
 
 	for(i=0;i<LENGTH_GRID;i++){
 		if (col_row == ROW){
@@ -33,15 +51,27 @@ int verify_col_row(int grid[LENGTH_GRID][LENGTH_GRID], int index, int col_row){
 		}
 	}
 
-	for (i=0;i<LENGTH_GRID;i++){
-		if (found[i] != FOUND){
-			return -1;
-		}
-	}
-	return 0;
+	return verify_all_found(found);
 }
+
 
 
 int verify_sub_array(int grid[LENGTH_GRID][LENGTH_GRID],int index){
-	return 0;
+
+	int i;
+	int j;
+	int starting_row = (index/3)*3;
+	int starting_col = (index%3)*3;
+	int found[LENGTH_GRID];
+
+	init_found_zero(found);
+
+	for (i=starting_row;i<starting_row+3;i++){
+		for(j=starting_col;j<starting_col+3;j++){
+			found[grid[i][j]] = FOUND;
+		}
+	}
+
+	return verify_all_found(found);
 }
+

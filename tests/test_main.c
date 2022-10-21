@@ -42,6 +42,22 @@ void test_verify_col_row_COL_ko(void){
 	CU_ASSERT(verify_col_row(grid,0,COL) != 0);
 }
 
+void test_verify_col_row_COL_ko_not_complete(void){
+
+	int grid[LENGTH_GRID][LENGTH_GRID];
+	int i;
+
+	for (i=0;i<LENGTH_GRID-2;i++){
+		set_minus_one(grid[i],LENGTH_GRID);
+	}
+
+	for(i=0;i<LENGTH_GRID-2;i++){
+		grid[i][0] = i;
+	}
+
+	CU_ASSERT(verify_col_row(grid,0,COL) != 0);
+}
+
 void test_verify_col_row_ROW_ok(void){
 
 	int grid[LENGTH_GRID][LENGTH_GRID];
@@ -76,6 +92,52 @@ void test_verify_col_row_ROW_ko(void){
 	CU_ASSERT(verify_col_row(grid,0,ROW) != 0);
 }
 
+void test_verify_col_row_ROW_ko_not_complete(void){
+
+	int grid[LENGTH_GRID][LENGTH_GRID];
+	int i;
+
+	for (i=0;i<LENGTH_GRID;i++){
+		set_minus_one(grid[i],LENGTH_GRID);
+	}
+
+	for(i=0;i<LENGTH_GRID-2;i++){
+		grid[0][i] = i;
+	}
+
+	grid[0][6]=2;
+
+	CU_ASSERT(verify_col_row(grid,0,ROW) != 0);
+}
+
+void test_verify_sub_array(void){
+
+	int grid[LENGTH_GRID][LENGTH_GRID];
+	int i,j,prev_val;
+
+	for (i=0;i<LENGTH_GRID;i++){
+		set_minus_one(grid[i],LENGTH_GRID);
+	}
+
+	prev_val=0;
+	for(i=0;i<3;i++){
+		for(j=0;j<3;j++){
+			grid[i][j] = prev_val++;
+		}
+	}
+
+	// Filling the last grid too
+	prev_val=0;
+	for(i=6;i<9;i++){
+		for(j=6;j<9;j++){
+			grid[i][j] = prev_val++;
+		}
+	}
+
+	CU_ASSERT(verify_sub_array(grid,0) == 0);
+	CU_ASSERT(verify_sub_array(grid,8) == 0);
+}
+
 int init_suite(void) { return 0; }
 int clean_suite(void) { return 0; }
 
@@ -99,7 +161,10 @@ int main()
 		NULL == CU_add_test(pSuite, "test of test_verify_col_row_ROW_ok()", test_verify_col_row_COL_ok) ||
 		NULL == CU_add_test(pSuite, "test_verify_col_row_COL_ko()", test_verify_col_row_COL_ko ) ||
 		NULL == CU_add_test(pSuite, "test_verify_col_row_ROW_ok()", test_verify_col_row_ROW_ok ) ||
-		NULL == CU_add_test(pSuite, "test_verify_col_row_ROW_ko()", test_verify_col_row_ROW_ko ) 
+		NULL == CU_add_test(pSuite, "test_verify_col_row_ROW_ko()", test_verify_col_row_ROW_ko ) ||
+		NULL == CU_add_test(pSuite, "test_verify_col_row_COL_ko_not_complete()", test_verify_col_row_COL_ko_not_complete ) ||
+		NULL == CU_add_test(pSuite, "test_verify_col_row_ROW_ko_not_complete()", test_verify_col_row_ROW_ko_not_complete ) ||
+		NULL == CU_add_test(pSuite, "test_verify_sub_array()", test_verify_sub_array ) 
 	)
 	{
 		CU_cleanup_registry();
