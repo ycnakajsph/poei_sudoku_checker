@@ -26,10 +26,10 @@ int verify_col_row(int grid[LENGTH_GRID][LENGTH_GRID], int index, int col_row){
 
 	for(i=0;i<LENGTH_GRID;i++){
 		if (col_row == ROW){
-			found[grid[index][i]] = FOUND;
+			found[grid[index][i]] += FOUND;
 		}
 		else{
-			found[grid[i][index]] = FOUND;
+			found[grid[i][index]] += FOUND;
 		}
 	}
 
